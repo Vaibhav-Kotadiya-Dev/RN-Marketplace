@@ -14,14 +14,15 @@ const HEADER = 115;
 const CustomParallaxList = () => {
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(1);
   const [productList, setProductList] = useState<Product[]>([]);
   const [filterProductList, setFilterProductList] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [totalProducts, setTotalProducts] = useState<number>();
   const [selectesTab, setSelectesTab] = useState<ProductCategory>('All');
-  const [isLoading, setIsLoading] = useState(false);
-  const [search, setSearch] = useState('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>('');
 
   const isFetchingData = useRef(false);
 
@@ -127,12 +128,24 @@ const CustomParallaxList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
+  const refreshHandler = async () => {
+    setRefreshing(true);
+    setIsLoading(true);
+    try {
+      await getProductData(true);
+    } catch (error) {} finally {
+      setRefreshing(false);
+    }
+  };
+
   return (
     <Animated.FlatList
       data={!isLoading ? filterProductList : []}
       keyExtractor={item => item.name}
       renderItem={!isLoading ? renderItem : null}
       numColumns={2}
+      refreshing={refreshing}
+      onRefresh={refreshHandler}
       onEndReached={onEndReached}
       onEndReachedThreshold={0.5}
       ListHeaderComponent={
