@@ -33,7 +33,6 @@ const FilterTabs: React.FC<FilterTabsProps> = ({
               style={
                 selectesTab === item.name ? styles.activeBtns : styles.btns
               }>
-              {/* <Image style={styles.imageLogo} source={item.icon} /> */}
               <Text
                 style={
                   selectesTab === item.name ? styles.activeName : styles.name

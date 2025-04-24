@@ -4,7 +4,6 @@ import {createStyles} from './style';
 import {ProductCardProps} from '../../../../Utils/Helper';
 
 const ProductCard = ({details}: ProductCardProps) => {
-  // const [loading, setloading] = useState(true);
   const styles = createStyles();
 
   const getPostTime = (date: string): string => {
@@ -43,7 +42,6 @@ const ProductCard = ({details}: ProductCardProps) => {
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={{uri: details.imageUrl}} />
-      {/* {loading && <View style={styles.loader}><ActivityIndicator color="#6086f4" /></View>} */}
       <View style={styles.detailsContainer}>
         <View>
           <Text style={styles.name} numberOfLines={1}>
